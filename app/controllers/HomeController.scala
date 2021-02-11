@@ -3,6 +3,7 @@ package controllers
 import infrastructure.dto.Tables._
 import javax.inject._
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.libs.json.Json
 import play.api.mvc._
 import slick.jdbc.MySQLProfile
 import slick.jdbc.MySQLProfile.api._
@@ -30,10 +31,18 @@ class HomeController @Inject()(
   def index() = Action.async {
 
     implicit request: Request[AnyContent] =>
-      val action = Distillery.result
+      val action = Whiskey join Distillery on (_.distillery === _.id)
       db
-        .run(action)
-        .map(distilleries => Ok(distilleries.toList.mkString(",")))
+        .run(action.result)
+        .map(whiskeyDetails =>
+          Ok(
+            Json.obj(
+              "Whiskies" ->
+                whiskeyDetails
+                  .map {
+                    case (whiskey, distillery) =>
+                      Json.obj("Name" -> whiskey.name, "Distillery" -> distillery.name)
+                  })))
         .recover {
           case exception: Exception => InternalServerError(exception.getMessage)
         }
