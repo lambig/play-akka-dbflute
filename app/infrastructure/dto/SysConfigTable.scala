@@ -1,4 +1,4 @@
-package infrastructure.whiskey
+package infrastructure.dto
 // AUTO-GENERATED Slick data model for table SysConfig
 trait SysConfigTable {
 

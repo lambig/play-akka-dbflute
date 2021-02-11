@@ -5,11 +5,10 @@ organization := "com.example"
 version := "1.0-SNAPSHOT"
 
 scalaVersion := "2.13.3"
-
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
 libraryDependencies ++=
   Seq(
     guice,
-    jdbc,
     "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test,
     "mysql" % "mysql-connector-java" % "8.0.23",
     "com.typesafe.play" %% "play-slick" % "5.0.0",

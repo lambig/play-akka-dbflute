@@ -1,4 +1,4 @@
-package infrastructure.whiskey
+package infrastructure.dto
 // AUTO-GENERATED Slick data model for table Whiskey
 trait WhiskeyTable {
 
@@ -19,7 +19,7 @@ trait WhiskeyTable {
     WhiskeyRow.tupled((<<[Int], <<[String], <<[Int]))
   }
   /** Table description of table whiskey. Objects of this class serve as prototypes for rows in queries. */
-  class Whiskey(_tableTag: Tag) extends profile.api.Table[WhiskeyRow](_tableTag, "whiskey") {
+  class Whiskey(_tableTag: Tag) extends profile.api.Table[WhiskeyRow](_tableTag, Some("whiskey"), "whiskey") {
     def * = (id, name, distillery) <> (WhiskeyRow.tupled, WhiskeyRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
     def ? = ((Rep.Some(id), Rep.Some(name), Rep.Some(distillery))).shaped.<>({r=>import r._; _1.map(_=> WhiskeyRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))

@@ -4,11 +4,11 @@ import slick.codegen.SourceCodeGenerator
 
 object SlickTableCodeGenerator extends App {
   SourceCodeGenerator.run(
-    profile = "slick.jdbc.PostgresProfile",
+    profile = "slick.jdbc.MySQLProfile",
     jdbcDriver = "com.mysql.cj.jdbc.Driver",
     url = "jdbc:mysql://localhost:49156/whiskey",
-    outputDir = "src/main/scala/",
-    pkg = "infrastructure.whiskey",
+    outputDir = "app/",
+    pkg = "infrastructure.dto",
     user = Some("root"),
     password = Some("mypassword"),
     ignoreInvalidDefaults = true,
