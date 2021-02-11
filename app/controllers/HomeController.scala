@@ -34,15 +34,15 @@ class HomeController @Inject()(
       val action = Whiskey join Distillery on (_.distillery === _.id)
       db
         .run(action.result)
-        .map(whiskeyDetails =>
-          Ok(
-            Json.obj(
-              "Whiskies" ->
-                whiskeyDetails
-                  .map {
-                    case (whiskey, distillery) =>
-                      Json.obj("Name" -> whiskey.name, "Distillery" -> distillery.name)
-                  })))
+        .map(
+          whiskeyAndDistilleryRecords =>
+            whiskeyAndDistilleryRecords
+              .map {
+                case (whiskey, distillery) =>
+                  Json.obj("Name" -> whiskey.name, "Distillery" -> distillery.name)
+              })
+        .map(whiskies => Json.obj("Whiskies" -> whiskies))
+        .map(json => Ok(json))
         .recover {
           case exception: Exception => InternalServerError(exception.getMessage)
         }
